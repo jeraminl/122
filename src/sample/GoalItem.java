@@ -12,6 +12,6 @@ public class GoalItem extends Item {
     public GoalItem(String i, int year, int month, int date, int hrs, int min, int p) {
         super(i);
         priority = p;
-        due = new Date(year,month, date,hrs,min);
+        due = new Date(year,month,date,hrs,min);
     }
 }

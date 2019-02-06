@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class TodoItem extends Item {
     Date due;
-    int priority;
+    int priority = 0;
 
     public TodoItem(String i) {
         super(i);

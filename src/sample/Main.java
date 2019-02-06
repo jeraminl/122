@@ -48,23 +48,24 @@ public class Main /*extends Application*/ {
         Scanner sc = new Scanner(System.in);
 
 
-        while(true){
-
-            System.out.println("Please enter Username");
-            String username = sc.nextLine();
-
-            if (!sys.users.containsKey(username)) {
-                System.out.println("User Does not exist... creating " + username);
-            }
-            sys.addUser(new User(username));
-            curUser = sys.getUser(username);
-            System.out.println("welcome " + username);
-            mainMenu();
 
 
+        System.out.println("Please enter Username");
+        String username = sc.nextLine();
 
-
+        if (!sys.users.containsKey(username)) {
+            System.out.println("User Does not exist... creating " + username);
         }
+        sys.addUser(new User(username));
+        curUser = sys.getUser(username);
+        System.out.println("welcome " + username);
+        while (true) {
+            mainMenu();
+        }
+
+
+
+
 
     }
 
@@ -79,20 +80,34 @@ public class Main /*extends Application*/ {
         );
         int cmd;
         cmd = sc.nextInt();
+        sc.nextLine();
         switch(cmd) {
             case 1:
                 System.out.println("which checklist do you wish to look at?");
-                int i = 1;
                 for (String k: curUser.getCheckLists().keySet()) {
-                    System.out.println(i + ": " + k);
-                    i++;
+                    System.out.println(k);
                 }
                 String listNum = sc.nextLine();
                 lookMenu(listNum);
                 break;
+            case 2:
+                System.out.println("please enter a name");
+                String cName = sc.nextLine();
+                System.out.println("Name: "+ cName);
+                System.out.println("please enter a type \n" +
+                        "todo: Make a To Do List \n" +
+                        "shopping: Make a Shopping list \n" +
+                        "goal: Make a Goal List \n" +
+                        "team: Make a Team List");
+                String cType = sc.nextLine();
+                System.out.println("Type: "+ cType);
+                curUser.addCheckList(cType, cName);
+                System.out.println(cName + " created \n");
+                break;
+            case 3:
+
 
         }
-
     }
 
     public static void lookMenu(String i){

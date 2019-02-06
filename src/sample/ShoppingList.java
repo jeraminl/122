@@ -10,5 +10,7 @@ public class ShoppingList extends CheckList {
         super(n);
         items.add(new Item("Buy coats"));
         items.add(new Item("Buy toys for the kids"));
+
+        completeItem(0);
     }
 }

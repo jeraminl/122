@@ -1,6 +1,7 @@
 package sample;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class CheckList implements ListPeekable, ListMutable{
     String id;
@@ -45,9 +46,16 @@ public class CheckList implements ListPeekable, ListMutable{
     }
 
     public void showItems(){
+        System.out.println(name + ": ");
         for (Item item : items){
             System.out.println(item.getContent());
         }
+    }
+
+    public void completeItem(int i){
+        items.get(i).complete();
+        DeleteTimerThread dt = new DeleteTimerThread(items,items.get(i));
+        dt.start();
     }
 
 

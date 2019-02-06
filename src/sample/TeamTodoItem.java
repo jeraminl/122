@@ -11,4 +11,9 @@ public class TeamTodoItem extends Item {
         priority = p;
 
     }
+
+    public String getContent(){
+        if (isCompleted()) return "- " + content + " Priority: " + priority + "Done";
+        else return "- " + content + "   " + priority;
+    }
 }

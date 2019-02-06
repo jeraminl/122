@@ -1,12 +1,15 @@
 package sample;
 
 import java.util.Date;
+import java.util.Timer;
 
 public class Item {
     String id;
     String content;
     Boolean completed;
     Date completeTime;
+    Timer delTimer;
+
     public Item(String i){
         content = i;
 
@@ -22,8 +25,8 @@ public class Item {
     }
 
     public String getContent(){
-        if (isCompleted()) return "- " + content + "   " + "Done";
-        else return "- " + content + "   " + "";
+        if (isCompleted()) return "Done - " + content + "   " + "";
+        else return "    - " + content + "   " + "";
     }
 
     public Boolean isCompleted(){
