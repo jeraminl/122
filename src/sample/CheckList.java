@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 
 public class CheckList implements ListPeekable, ListMutable{
-    String id;
-    String name;
-    ArrayList<Item> items;
+    private String id;
+    private String name;
+    private ArrayList<Item> items;
 
     public CheckList(String n){
         name = n;
@@ -37,7 +37,7 @@ public class CheckList implements ListPeekable, ListMutable{
     }
     public Boolean deleteItem(String s){
         for(Item i : items){
-            if(s == i.content){
+            if(s == i.getContent()){
                 items.remove(s);
             }
         }

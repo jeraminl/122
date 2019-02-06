@@ -76,7 +76,7 @@ public class Main /*extends Application*/ {
                 "1: Look at checklists \n"+
                 "2: create a checklist \n" +
                 "3: delete a checklist \n" +
-                "4: edit a checkklist"
+                "4: Share a Team List \n"
         );
         int cmd;
         cmd = sc.nextInt();
@@ -84,9 +84,7 @@ public class Main /*extends Application*/ {
         switch(cmd) {
             case 1:
                 System.out.println("which checklist do you wish to look at?");
-                for (String k: curUser.getCheckLists().keySet()) {
-                    System.out.println(k);
-                }
+                curUser.showCheckLists();
                 String listNum = sc.nextLine();
                 lookMenu(listNum);
                 break;
@@ -102,9 +100,22 @@ public class Main /*extends Application*/ {
                 String cType = sc.nextLine();
                 System.out.println("Type: "+ cType);
                 curUser.addCheckList(cType, cName);
-                System.out.println(cName + " created \n");
+                //System.out.println(cName + " created \n");
                 break;
             case 3:
+                System.out.println("which checklist do you wish to look at?");
+                curUser.showCheckLists();
+                String listToDel = sc.nextLine();
+                curUser.deleteChecklist(listToDel);
+            case 4:
+                System.out.println("Which team list would you like to share?");
+                for (String k: curUser.getCheckLists().keySet()) {
+                    if (curUser.getCheckLists().get(k) instanceof TeamList) System.out.println(k);
+                }
+                String ListToShare = sc.nextLine();
+                System.out.println("Enter the username of the person you would like to share it to");
+                String userToShare = sc.nextLine();
+                sys.getUser(userToShare).addCheckList(curUser.getCheckList(ListToShare));
 
 
         }

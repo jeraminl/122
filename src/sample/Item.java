@@ -4,11 +4,11 @@ import java.util.Date;
 import java.util.Timer;
 
 public class Item {
-    String id;
-    String content;
-    Boolean completed;
-    Date completeTime;
-    Timer delTimer;
+    private String id;
+    private String content;
+    private Boolean completed;
+    private Date completeTime;
+    private Timer delTimer;
 
     public Item(String i){
         content = i;
@@ -25,8 +25,12 @@ public class Item {
     }
 
     public String getContent(){
-        if (isCompleted()) return "Done - " + content + "   " + "";
-        else return "    - " + content + "   " + "";
+        return content;
+    }
+
+    public String PrintContent(){
+        if (isCompleted()) return "Done - " + getContent() + "   " + "";
+        else return "    - " + getContent() + "   " + "";
     }
 
     public Boolean isCompleted(){

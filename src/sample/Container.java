@@ -19,7 +19,7 @@ public class Container {
 
     }
     public void addUser(User u){
-        users.put(u.name,u);
+        users.put(u.getName(),u);
     }
 
     public User getUser(String n){

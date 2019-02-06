@@ -12,8 +12,8 @@ public class TeamTodoItem extends Item {
 
     }
 
-    public String getContent(){
-        if (isCompleted()) return "- " + content + " Priority: " + priority + "Done";
-        else return "- " + content + "   " + priority;
+    public String printContent(){
+        if (isCompleted()) return "- " + getContent() + " Priority: " + priority + "Done";
+        else return "- " + getContent() + "   " + priority;
     }
 }
