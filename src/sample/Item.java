@@ -28,9 +28,9 @@ public class Item {
         return content;
     }
 
-    public String PrintContent(){
-        if (isCompleted()) return "Done - " + getContent() + "   " + "";
-        else return "    - " + getContent() + "   " + "";
+    public void printContent(){
+        if (isCompleted())  System.out.println("Done - " + getContent());
+        else System.out.println( "    - " + getContent());
     }
 
     public Boolean isCompleted(){

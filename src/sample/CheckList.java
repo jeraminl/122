@@ -11,12 +11,10 @@ public class CheckList implements ListPeekable, ListMutable{
     public CheckList(String n){
         name = n;
         items = new ArrayList<Item>();
-
     }
 
     public void changeName(String s){
         name = s;
-
     }
 
     public String getName(){
@@ -44,12 +42,16 @@ public class CheckList implements ListPeekable, ListMutable{
 
         return true;
     }
-
     public void showItems(){
+        System.out.println("================================================================");
+
         System.out.println(name + ": ");
         for (Item item : items){
-            System.out.println(item.getContent());
+            item.printContent();
         }
+
+        System.out.println("================================================================");
+
     }
 
     public void completeItem(int i){

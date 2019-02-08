@@ -8,8 +8,8 @@ public class ShoppingList extends CheckList {
 
     public ShoppingList(String n){
         super(n);
-        getItems().add(new Item("Buy coats"));
-        getItems().add(new Item("Buy toys for the kids"));
+        //getItems().add(new Item("Buy coats"));
+        //getItems().add(new Item("Buy toys for the kids"));
 
         completeItem(0);
     }

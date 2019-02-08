@@ -13,9 +13,9 @@ public class User {
         name = n;
 
         //test default values
-        addCheckList("shopping", "christmas");
-        addCheckList("todo", "INF122");
-        addCheckList("team", "Project 1");
+        //addCheckList("shopping", "christmas");
+        //addCheckList("todo", "INF122");
+        //addCheckList("team", "Project 1");
 
     }
 
