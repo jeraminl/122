@@ -151,6 +151,10 @@ public class Main /*extends Application*/ {
                 System.out.println("what is the new description?");
                 String content = sc.nextLine();
                 cl.getItems().get(item-1).editContent(content);
+                System.out.println("What is the new priority 1-5? 0 for no priority");
+                int nPriority = sc.nextInt();
+                sc.nextLine();
+
 
 
                 break;

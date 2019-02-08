@@ -3,25 +3,25 @@ package sample;
 import java.util.Date;
 import java.util.Timer;
 
-public class Item {
+public class Item implements ItemMutable, ItemPeekable{
     private String id;
     private String content;
     private Boolean completed;
     private Date completeTime;
     private Timer delTimer;
+    private int priority = 0;
 
     public Item(String i){
         content = i;
 
         completed = false;
     }
-    public String getID(){
+    public String getId(){
         return id;
     }
 
-    public Boolean editContent(String s){
+    public void editContent(String s){
         content = s;
-        return true;
     }
 
     public String getContent(){
@@ -43,5 +43,13 @@ public class Item {
 
     public void complete(){
         completed = true;
+    }
+
+    public void setPriority(int n){
+        priority = n;
+    }
+
+    public int getPriority(){
+        return priority;
     }
 }
