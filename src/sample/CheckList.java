@@ -1,6 +1,7 @@
 package sample;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Timer;
 
 public abstract class CheckList{
@@ -27,16 +28,9 @@ public abstract class CheckList{
 
     abstract void addItem(String n);
     abstract void addItem(String n, int year, int month, int date, int hrs, int min, int p);
-        /*Item item = null;
-        ItemCreator iCreator = new ItemCreator();
-
-        items.add(i);
-        return true;
-
-        */
-
-
+    abstract void addItemMenu(Scanner sc, String name);
     public Boolean editItem(String i, String n){
+
         return true;
     }
     public Boolean deleteItem(String s){
@@ -56,6 +50,7 @@ public abstract class CheckList{
         for (Item item : items){
             System.out.print(i + ": ");
             item.printContent();
+            i++;
         }
 
         System.out.println("================================================================");

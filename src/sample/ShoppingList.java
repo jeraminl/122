@@ -1,6 +1,7 @@
 package sample;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ShoppingList extends CheckList {
     int priority;
@@ -31,5 +32,10 @@ public class ShoppingList extends CheckList {
 
         getItems().add(toAdd);
 
+    }
+
+    @Override
+    void addItemMenu(Scanner sc, String n) {
+        addItem(n);
     }
 }

@@ -47,15 +47,7 @@ public class Main /*extends Application*/ {
 
 
         while (true) {
-            System.out.println("Please enter Username");
-            String username = sc.nextLine();
-
-            if (!sys.users.containsKey(username)) {
-                System.out.println("User Does not exist... creating " + username);
-                sys.addUser(new User(username));
-            }
-            curUser = sys.getUser(username);
-            System.out.println("welcome " + username);
+            logInMenu(sc);
             mainMenu();
         }
     }
@@ -77,14 +69,7 @@ public class Main /*extends Application*/ {
                     System.out.println("There is no checklist to look at yet");
                 }
             } else if (cmd == 2) {
-                System.out.println("please enter a name");
-                String cName = sc.nextLine();
-                System.out.println("Name: " + cName);
-                printTypeOptions();
-                String cType = sc.nextLine();
-                System.out.println("Type: " + cType);
-                curUser.addCheckList(cType, cName);
-                //System.out.println(cName + " created \n");
+                createCheckListMenu(sc);
             } else if (cmd == 3) {
                 printCheckLists();
 
@@ -120,8 +105,7 @@ public class Main /*extends Application*/ {
             cl.showItems();
             if (cmd == 1){
                 System.out.println("what item would you like to complete?");
-                int index = sc.nextInt();
-                sc.nextLine();
+                int index = sc.nextInt(); sc.nextLine();
                 if(cl instanceof GoalList){
                     ((GoalList) cl).completeItem(index-1);
                 }
@@ -143,15 +127,7 @@ public class Main /*extends Application*/ {
 
                 break;
             } else if (cmd == 4) {
-                System.out.println("what Item would you like to edit?");
-                int item = sc.nextInt();
-                sc.nextLine();
-                System.out.println("what is the new description?");
-                String content = sc.nextLine();
-                cl.getItems().get(item-1).editContent(content);
-                System.out.println("What is the new priority 1-5? 0 for no priority");
-                int nPriority = sc.nextInt();
-                sc.nextLine();
+                editMenu(sc, cl);
 
 
 
@@ -177,61 +153,7 @@ public class Main /*extends Application*/ {
     }
 
     public static void addItemCmd(CheckList cl, String name, Scanner sc){
-        if (cl instanceof GoalList){
-            System.out.println("would you like to make a deadline and priority? Y/N");
-            String cmd = sc.nextLine();
-
-            if (cmd.toLowerCase().equals("y")) {
-                System.out.println("Please enter deadline in the following format: \n" +
-                        "YYYY/MM/DD/HR/MI");
-                String[] deadline = sc.nextLine().split("/");
-                int[] dl = stringToInt(deadline);
-                System.out.println("Please enter the priority of this item from 1-5 (low to high)");
-                int priority = sc.nextInt(); sc.nextLine();
-
-                ((GoalList) cl).addItem(name, dl[0], dl[1], dl[2], dl[3], dl[4], priority);
-            }
-            else {
-                ((GoalList) cl).addItem(name);
-            }
-
-        } else if (cl instanceof TeamList) {
-            System.out.println("Please enter deadline in the following format: \n" +
-                    "YYYY/MM/DD/HR/MI");
-            String[] deadline = sc.nextLine().split("/");
-            int[] dl = stringToInt(deadline);
-
-            System.out.println("Please enter the priority of this item from 1-5 (low to high)");
-            int priority = sc.nextInt(); sc.nextLine();
-
-            cl.addItem(name,dl[0],dl[1],dl[2],dl[3],dl[4],priority);
-
-
-        } else if (cl instanceof TodoList) {
-            System.out.println("would you like to make a deadline and priority? Y/N");
-            String cmd = sc.nextLine();
-
-            if (cmd.toLowerCase().equals("y")) {
-                System.out.println("Please enter deadline in the following format: \n" +
-                        "YYYY/MM/DD/HR/MI");
-                String[] deadline = sc.nextLine().split("/");
-                int[] dl = stringToInt(deadline);
-
-                System.out.println("Please enter the priority of this item from 1-5 (low to high)");
-                int priority = sc.nextInt();
-                sc.nextLine();
-
-                cl.addItem(name, dl[0], dl[1], dl[2], dl[3], dl[4], priority);
-            }
-            else {
-                cl.addItem(name);
-            }
-
-
-        } else if (cl instanceof ShoppingList) {
-            cl.addItem(name);
-        }
-
+        cl.addItemMenu(sc, name);
     }
 
     public static int[] stringToInt(String[] sArray){
@@ -255,7 +177,7 @@ public class Main /*extends Application*/ {
                 System.out.println("what item would you like to complete?");
                 int i = sc.nextInt();
                 sc.nextLine();
-                item.getSubGoalItems().get(i-1).complete();
+                item.completeItem(i-1);
                 break;
 
             } else if (cmd == 2) {
@@ -319,6 +241,7 @@ public class Main /*extends Application*/ {
     }
 
     static void printMainMenu(){
+        System.out.println("//////////////////Main Menu///////////////////");
         System.out.println("what would you like to do? \n" +
                 "1: Look at checklists \n" +
                 "2: create a checklist \n" +
@@ -326,6 +249,7 @@ public class Main /*extends Application*/ {
                 "4: Share a Team List \n" +
                 "5: log out"
         );
+        System.out.println("/////////////////////////////////////");
     }
 
     static void printCheckLists(){
@@ -336,15 +260,18 @@ public class Main /*extends Application*/ {
     }
 
     static void printTypeOptions(){
+        System.out.println("//////////////////TYPES///////////////////");
         System.out.println("please enter a type \n" +
                 "todo: Make a To Do List \n" +
                 "shopping: Make a Shopping list \n" +
                 "goal: Make a Goal List \n" +
                 "team: Make a Team List");
+        System.out.println("/////////////////////////////////////");
 
     }
 
     static void printlistMenu(){
+        System.out.println("//////////////////CheckList Options///////////////////");
         System.out.println("What would you like to do with this list? \n" +
                 "1: complete an item \n" +
                 "2: create an item \n" +
@@ -352,5 +279,42 @@ public class Main /*extends Application*/ {
                 "4: edit an item \n" +
                 "5: Interact with sub-goals \n" +
                 "6: back to main menu" );
+        System.out.println("/////////////////////////////////////");
+    }
+
+    static void editMenu(Scanner sc, CheckList cl){
+        System.out.println("what Item would you like to edit?");
+        int item = sc.nextInt(); sc.nextLine();
+        System.out.println("what is the new description?");
+        String content = sc.nextLine();
+        cl.getItems().get(item-1).editContent(content);
+        System.out.println("What is the new priority 1-5? 0 for no priority");
+        int nPriority = sc.nextInt();sc.nextLine();
+        cl.getItems().get(item-1).setPriority(nPriority);
+    }
+
+    static void logInMenu(Scanner sc){
+        System.out.println("Please enter Username");
+        String username = sc.nextLine();
+
+        if (!sys.users.containsKey(username)) {
+            System.out.println("User Does not exist... creating " + username);
+            sys.addUser(new User(username));
+        }
+        curUser = sys.getUser(username);
+        System.out.println("welcome " + username);
+
+    }
+
+    static void createCheckListMenu(Scanner sc){
+        System.out.println("please enter a name");
+        String cName = sc.nextLine();
+        System.out.println("Name: " + cName);
+        printTypeOptions();
+        String cType = sc.nextLine();
+        System.out.println("Type: " + cType);
+        curUser.addCheckList(cType, cName);
+        //System.out.println(cName + " created \n");
+
     }
 }

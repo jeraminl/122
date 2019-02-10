@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 
-public class Item {
+public abstract class Item {
     private String id;
     private String content;
     private Boolean completed;
@@ -47,5 +47,7 @@ public class Item {
     public void complete(){
         completed = true;
     }
+
+    public abstract void setPriority(int n);
 
 }
