@@ -3,7 +3,7 @@ package sample;
 import java.util.ArrayList;
 import java.util.Timer;
 
-public class CheckList implements ListPeekable, ListMutable{
+public abstract class CheckList{
     private String id;
     private String name;
     private ArrayList<Item> items;
@@ -25,10 +25,16 @@ public class CheckList implements ListPeekable, ListMutable{
         return items;
     }
 
-    public Boolean addItem(Item i){
+    abstract void addItem(String n);
+    abstract void addItem(String n, int year, int month, int date, int hrs, int min, int p);
+        /*Item item = null;
+        ItemCreator iCreator = new ItemCreator();
+
         items.add(i);
         return true;
-    }
+
+        */
+
 
     public Boolean editItem(String i, String n){
         return true;
@@ -43,10 +49,12 @@ public class CheckList implements ListPeekable, ListMutable{
         return true;
     }
     public void showItems(){
-        System.out.println("================================================================");
+        System.out.println("================================Items================================");
 
         System.out.println(name + ": ");
+        int i = 1;
         for (Item item : items){
+            System.out.print(i + ": ");
             item.printContent();
         }
 
@@ -56,8 +64,9 @@ public class CheckList implements ListPeekable, ListMutable{
 
     public void completeItem(int i){
         items.get(i).complete();
-        DeleteTimerThread dt = new DeleteTimerThread(items,items.get(i));
-        dt.start();
+
+        CompletedCleaner cleaner = CompletedCleaner.getInstance();
+        cleaner.clean(items,items.get(i));
     }
 
 

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="INF122 - Checklist:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/INF122___Checklist_jar</output-path>
+    <root id="archive" name="INF122 - Checklist.jar">
+      <element id="module-output" name="INF122 - Checklist" />
+    </root>
+  </artifact>
+</component>

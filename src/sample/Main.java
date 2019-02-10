@@ -75,9 +75,17 @@ public class Main /*extends Application*/ {
             sc.nextLine();
             if (cmd == 1) {
                 System.out.println("which checklist do you wish to look at?");
+                System.out.println("//////////////////CheckLists///////////////////");
                 curUser.showCheckLists();
+                System.out.println("/////////////////////////////////////");
+
                 String listNum = sc.nextLine();
-                lookMenu(listNum, sc);
+                if (curUser.getCheckLists().size() > 0) {
+                    lookMenu(listNum, sc);
+                }
+                else {
+                    System.out.println("There is no checklist to look at yet");
+                }
             } else if (cmd == 2) {
                 System.out.println("please enter a name");
                 String cName = sc.nextLine();
@@ -93,7 +101,11 @@ public class Main /*extends Application*/ {
                 //System.out.println(cName + " created \n");
             } else if (cmd == 3) {
                 System.out.println("which checklist do you wish to look at?");
+                System.out.println("/////////////////////////////////////");
+
                 curUser.showCheckLists();
+                System.out.println("/////////////////////////////////////");
+
                 String listToDel = sc.nextLine();
                 curUser.deleteChecklist(listToDel);
             } else if (cmd == 4) {
@@ -104,7 +116,12 @@ public class Main /*extends Application*/ {
                 String ListToShare = sc.nextLine();
                 System.out.println("Enter the username of the person you would like to share it to");
                 String userToShare = sc.nextLine();
-                sys.getUser(userToShare).addCheckList(curUser.getCheckList(ListToShare));
+                if (sys.users.containsKey(userToShare)) {
+                    sys.getUser(userToShare).addCheckList(curUser.getCheckList(ListToShare));
+                }
+                else {
+                    System.out.println("User does not exist");
+                }
             } else if (cmd == 5) {
                 break;
             }
@@ -119,7 +136,7 @@ public class Main /*extends Application*/ {
                 "2: create an item \n" +
                 "3: delete an item \n" +
                 "4: edit an item \n" +
-                "5: Interact with sub-goals" +
+                "5: Interact with sub-goals \n" +
                 "6: back to main menu" );
         int cmd = sc.nextInt();
         sc.nextLine();
@@ -127,9 +144,15 @@ public class Main /*extends Application*/ {
             cl.showItems();
             if (cmd == 1){
                 System.out.println("what item would you like to complete?");
-                int item = sc.nextInt();
+                int index = sc.nextInt();
                 sc.nextLine();
-                cl.getItems().get(item-1).complete();
+                System.out.println(cl.getItems());
+                if(cl instanceof GoalList){
+                    ((GoalList) cl).completeItem(index-1);
+                }
+                else {
+                    cl.completeItem(index-1);
+                }
                 break;
 
             } else if (cmd == 2) {
@@ -166,7 +189,7 @@ public class Main /*extends Application*/ {
                     System.out.println("which Goal chain would you like to interact with?");
                     int item = sc.nextInt();
                     sc.nextLine();
-                    goalItemMenu(((GoalList) cl).getGoalItems().get(item-1), sc);
+                    goalItemMenu(((GoalItem) cl.getItems().get(item-1)), sc);
                 }
                 break;
             } else if (cmd == 6) {
@@ -183,7 +206,7 @@ public class Main /*extends Application*/ {
             System.out.println("would you like to make a deadline and priority? Y/N");
             String cmd = sc.nextLine();
 
-            if (cmd == "y") {
+            if (cmd.toLowerCase().equals("y")) {
                 System.out.println("Please enter deadline in the following format: \n" +
                         "YYYY/MM/DD/HR/MI");
                 String[] deadline = sc.nextLine().split("/");
@@ -192,10 +215,10 @@ public class Main /*extends Application*/ {
                 int priority = sc.nextInt();
                 sc.nextLine();
 
-                ((GoalList) cl).addSubGoalList(name, dl[0], dl[1], dl[2], dl[3], dl[4], priority);
+                ((GoalList) cl).addItem(name, dl[0], dl[1], dl[2], dl[3], dl[4], priority);
             }
             else {
-                ((GoalList) cl).addSubGoalList(name);
+                ((GoalList) cl).addItem(name);
             }
 
         } else if (cl instanceof TeamList) {
@@ -208,14 +231,14 @@ public class Main /*extends Application*/ {
             int priority = sc.nextInt();
             sc.nextLine();
 
-            cl.addItem(new TeamTodoItem(name,dl[0],dl[1],dl[2],dl[3],dl[4],priority));
+            cl.addItem(name,dl[0],dl[1],dl[2],dl[3],dl[4],priority);
 
 
         } else if (cl instanceof TodoList) {
             System.out.println("would you like to make a deadline and priority? Y/N");
             String cmd = sc.nextLine();
 
-            if (cmd == "y") {
+            if (cmd.toLowerCase().equals("y")) {
                 System.out.println("Please enter deadline in the following format: \n" +
                         "YYYY/MM/DD/HR/MI");
                 String[] deadline = sc.nextLine().split("/");
@@ -225,15 +248,15 @@ public class Main /*extends Application*/ {
                 int priority = sc.nextInt();
                 sc.nextLine();
 
-                cl.addItem(new TodoItem(name, dl[0], dl[1], dl[2], dl[3], dl[4], priority));
+                cl.addItem(name, dl[0], dl[1], dl[2], dl[3], dl[4], priority);
             }
             else {
-                cl.addItem(new TodoItem(name));
+                cl.addItem(name);
             }
 
 
         } else if (cl instanceof ShoppingList) {
-            cl.addItem(new ShoppingItem(name));
+            cl.addItem(name);
         }
 
     }
@@ -311,7 +334,7 @@ public class Main /*extends Application*/ {
         System.out.println("would you like to make a deadline and priority? Y/N");
         String cmd = sc.nextLine();
 
-        if (cmd == "y") {
+        if (cmd.toLowerCase().equals("y")) {
             System.out.println("Please enter deadline in the following format: \n" +
                     "YYYY/MM/DD/HR/MI");
             String[] deadline = sc.nextLine().split("/");
@@ -320,9 +343,9 @@ public class Main /*extends Application*/ {
             int priority = sc.nextInt();
             sc.nextLine();
 
-            cl.addSubItems(new GoalItem(name, dl[0], dl[1], dl[2], dl[3], dl[4], priority));
+            cl.addItem(name, dl[0], dl[1], dl[2], dl[3], dl[4], priority);
         } else {
-            cl.addSubItems(new GoalItem(name));
+            cl.addItem(name);
         }
 
 

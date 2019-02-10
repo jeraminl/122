@@ -1,21 +1,24 @@
 package sample;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 
-public class Item implements ItemMutable, ItemPeekable{
+public class Item {
     private String id;
     private String content;
     private Boolean completed;
-    private Date completeTime;
     private Timer delTimer;
-    private int priority = 0;
+
 
     public Item(String i){
         content = i;
 
         completed = false;
     }
+
     public String getId(){
         return id;
     }
@@ -45,11 +48,4 @@ public class Item implements ItemMutable, ItemPeekable{
         completed = true;
     }
 
-    public void setPriority(int n){
-        priority = n;
-    }
-
-    public int getPriority(){
-        return priority;
-    }
 }
