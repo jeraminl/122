@@ -8,19 +8,19 @@ import java.util.Date;
 public class GoalItem extends Item implements ItemMutable, ItemPeekable{
     int priority;
     Date due;
-    ArrayList<GoalItem> subGoalItems;
+    ArrayList<Item> subGoalItems;
 
 
     public GoalItem(String i) {
         super(i);
-        subGoalItems = new ArrayList<GoalItem>();
+        subGoalItems = new ArrayList<Item>();
     }
 
     public GoalItem(String i, int year, int month, int date, int hrs, int min, int p) {
         super(i);
         priority = p;
         due = new Date(year,month,date,hrs,min);
-        subGoalItems = new ArrayList<GoalItem>();
+        subGoalItems = new ArrayList<Item>();
     }
 
     public void printContent(){
@@ -31,21 +31,18 @@ public class GoalItem extends Item implements ItemMutable, ItemPeekable{
     public void showItems(){
         System.out.println("---------" +getContent() + "'s sub items-----------");
         int i = 0;
-        for (GoalItem item : getSubGoalItems()){
+        for (Item item : getSubGoalItems()){
             System.out.print(i + ": ");
             item.printContent();
-            if (item.getSubGoalItems().size() > 0){
-                item.showItems();
+            if (((GoalItem) item).getSubGoalItems().size() > 0){
+                ((GoalItem) item).showItems();
             }
         }
         System.out.println("--------------------");
 
     }
-    public void addSubItems(GoalItem g){
-        getSubGoalItems().add(g);
 
-    }
-    public ArrayList<GoalItem> getSubGoalItems(){
+    public ArrayList<Item> getSubGoalItems(){
         return subGoalItems;
     }
 
@@ -85,4 +82,12 @@ public class GoalItem extends Item implements ItemMutable, ItemPeekable{
         toAdd = (GoalItem)iCreator.create(i,year,month,date,hrs,min,p);
         getSubGoalItems().add(toAdd);
     }
+
+    public void completeItem(int i){
+        subGoalItems.get(i).complete();
+
+        CompletedCleaner cleaner = CompletedCleaner.getInstance();
+        cleaner.clean(subGoalItems, subGoalItems.get(i));
+    }
+
 }

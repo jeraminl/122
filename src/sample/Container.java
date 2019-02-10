@@ -15,9 +15,7 @@ public class Container {
         System.out.println("Printing users");
     }
 
-    public void showCheckLists(){
 
-    }
     public void addUser(User u){
         users.put(u.getName(),u);
     }

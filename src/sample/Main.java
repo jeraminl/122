@@ -63,22 +63,12 @@ public class Main /*extends Application*/ {
     public static void mainMenu(){
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("what would you like to do? \n" +
-                    "1: Look at checklists \n" +
-                    "2: create a checklist \n" +
-                    "3: delete a checklist \n" +
-                    "4: Share a Team List \n" +
-                    "5: log out"
-            );
+            printMainMenu();
             int cmd;
             cmd = sc.nextInt();
             sc.nextLine();
             if (cmd == 1) {
-                System.out.println("which checklist do you wish to look at?");
-                System.out.println("//////////////////CheckLists///////////////////");
-                curUser.showCheckLists();
-                System.out.println("/////////////////////////////////////");
-
+                printCheckLists();
                 String listNum = sc.nextLine();
                 if (curUser.getCheckLists().size() > 0) {
                     lookMenu(listNum, sc);
@@ -90,21 +80,13 @@ public class Main /*extends Application*/ {
                 System.out.println("please enter a name");
                 String cName = sc.nextLine();
                 System.out.println("Name: " + cName);
-                System.out.println("please enter a type \n" +
-                        "todo: Make a To Do List \n" +
-                        "shopping: Make a Shopping list \n" +
-                        "goal: Make a Goal List \n" +
-                        "team: Make a Team List");
+                printTypeOptions();
                 String cType = sc.nextLine();
                 System.out.println("Type: " + cType);
                 curUser.addCheckList(cType, cName);
                 //System.out.println(cName + " created \n");
             } else if (cmd == 3) {
-                System.out.println("which checklist do you wish to look at?");
-                System.out.println("/////////////////////////////////////");
-
-                curUser.showCheckLists();
-                System.out.println("/////////////////////////////////////");
+                printCheckLists();
 
                 String listToDel = sc.nextLine();
                 curUser.deleteChecklist(listToDel);
@@ -131,13 +113,7 @@ public class Main /*extends Application*/ {
     public static void lookMenu(String i, Scanner sc){
         CheckList cl = curUser.getCheckList(i);
         cl.showItems();
-        System.out.println("What would you like to do with this list? \n" +
-                "1: complete an item \n" +
-                "2: create an item \n" +
-                "3: delete an item \n" +
-                "4: edit an item \n" +
-                "5: Interact with sub-goals \n" +
-                "6: back to main menu" );
+        printlistMenu();
         int cmd = sc.nextInt();
         sc.nextLine();
         while (true) {
@@ -146,7 +122,6 @@ public class Main /*extends Application*/ {
                 System.out.println("what item would you like to complete?");
                 int index = sc.nextInt();
                 sc.nextLine();
-                System.out.println(cl.getItems());
                 if(cl instanceof GoalList){
                     ((GoalList) cl).completeItem(index-1);
                 }
@@ -212,8 +187,7 @@ public class Main /*extends Application*/ {
                 String[] deadline = sc.nextLine().split("/");
                 int[] dl = stringToInt(deadline);
                 System.out.println("Please enter the priority of this item from 1-5 (low to high)");
-                int priority = sc.nextInt();
-                sc.nextLine();
+                int priority = sc.nextInt(); sc.nextLine();
 
                 ((GoalList) cl).addItem(name, dl[0], dl[1], dl[2], dl[3], dl[4], priority);
             }
@@ -228,8 +202,7 @@ public class Main /*extends Application*/ {
             int[] dl = stringToInt(deadline);
 
             System.out.println("Please enter the priority of this item from 1-5 (low to high)");
-            int priority = sc.nextInt();
-            sc.nextLine();
+            int priority = sc.nextInt(); sc.nextLine();
 
             cl.addItem(name,dl[0],dl[1],dl[2],dl[3],dl[4],priority);
 
@@ -273,13 +246,7 @@ public class Main /*extends Application*/ {
 
     public static void goalItemMenu(GoalItem item, Scanner sc){
         item.showItems();
-        System.out.println("What would you like to do with this list? \n" +
-                "1: complete an item \n" +
-                "2: create an item \n" +
-                "3: delete an item \n" +
-                "4: edit an item \n" +
-                "5: Interact with sub-goals \n" +
-                "6: back to main menu" );
+        printlistMenu();
         int cmd = sc.nextInt();
         sc.nextLine();
         while (true) {
@@ -318,7 +285,7 @@ public class Main /*extends Application*/ {
                 System.out.println("which Goal chain would you like to interact with?");
                 int i = sc.nextInt();
                 sc.nextLine();
-                goalItemMenu(item.getSubGoalItems().get(i-1),sc);
+                goalItemMenu((GoalItem)item.getSubGoalItems().get(i-1),sc);
                 break;
 
             } else if (cmd == 6) {
@@ -349,5 +316,41 @@ public class Main /*extends Application*/ {
         }
 
 
+    }
+
+    static void printMainMenu(){
+        System.out.println("what would you like to do? \n" +
+                "1: Look at checklists \n" +
+                "2: create a checklist \n" +
+                "3: delete a checklist \n" +
+                "4: Share a Team List \n" +
+                "5: log out"
+        );
+    }
+
+    static void printCheckLists(){
+        System.out.println("which checklist do you wish to look at?");
+        System.out.println("//////////////////CheckLists///////////////////");
+        curUser.showCheckLists();
+        System.out.println("/////////////////////////////////////");
+    }
+
+    static void printTypeOptions(){
+        System.out.println("please enter a type \n" +
+                "todo: Make a To Do List \n" +
+                "shopping: Make a Shopping list \n" +
+                "goal: Make a Goal List \n" +
+                "team: Make a Team List");
+
+    }
+
+    static void printlistMenu(){
+        System.out.println("What would you like to do with this list? \n" +
+                "1: complete an item \n" +
+                "2: create an item \n" +
+                "3: delete an item \n" +
+                "4: edit an item \n" +
+                "5: Interact with sub-goals \n" +
+                "6: back to main menu" );
     }
 }
